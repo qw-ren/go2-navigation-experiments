@@ -1,0 +1,139 @@
+# Foxy-compatible real-robot Nav2 parameters for the Go2 Fast-LIO baseline.
+#
+# This file is intentionally smaller than the Humble laptop parameter file:
+# - no recovery behaviors are required by nav2/real_nav_to_pose_no_recovery.xml
+# - bt_navigator only loads the plugins used by that tree
+# - cmd_vel is still remapped by the launcher to /nav2_debug/cmd_vel
+
+planner_server:
+  ros__parameters:
+    use_sim_time: false
+    expected_planner_frequency: 1.0
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_navfn_planner/NavfnPlanner"
+      tolerance: 0.5
+      use_astar: false
+      allow_unknown: false
+
+controller_server:
+  ros__parameters:
+    use_sim_time: false
+    controller_frequency: 10.0
+    odom_topic: /Odometry
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.001
+    min_theta_velocity_threshold: 0.001
+    progress_checker_plugin: "progress_checker"
+    goal_checker_plugin: "goal_checker"
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.03
+      movement_time_allowance: 25.0
+
+    goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.25
+      yaw_goal_tolerance: 0.5
+      stateful: true
+
+    FollowPath:
+      plugin: "dwb_core::DWBLocalPlanner"
+      debug_trajectory_details: false
+      min_vel_x: 0.0
+      max_vel_x: 0.50
+      min_vel_y: 0.0
+      max_vel_y: 0.0
+      max_vel_theta: 1.00
+      min_speed_xy: 0.0
+      max_speed_xy: 0.50
+      min_speed_theta: 0.0
+      acc_lim_x: 0.80
+      acc_lim_y: 0.0
+      acc_lim_theta: 2.00
+      decel_lim_x: -0.80
+      decel_lim_y: 0.0
+      decel_lim_theta: -2.00
+      vx_samples: 16
+      vy_samples: 1
+      vtheta_samples: 12
+      sim_time: 2.0
+      linear_granularity: 0.05
+      angular_granularity: 0.025
+      transform_tolerance: 0.3
+      xy_goal_tolerance: 0.25
+      trans_stopped_velocity: 0.02
+      short_circuit_trajectory_evaluation: true
+      stateful: true
+      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
+      BaseObstacle.scale: 0.02
+      PathAlign.scale: 5.0
+      PathAlign.forward_point_distance: 0.25
+      GoalAlign.scale: 2.0
+      GoalAlign.forward_point_distance: 0.25
+      PathDist.scale: 18.0
+      GoalDist.scale: 16.0
+      RotateToGoal.scale: 0.6
+      RotateToGoal.slowing_factor: 2.0
+      Oscillation.scale: 4.0
+      RotateToGoal.lookahead_time: -1.0
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: false
+      global_frame: camera_init
+      robot_base_frame: unitree_go2/base_footprint
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      rolling_window: true
+      width: 4
+      height: 4
+      resolution: 0.05
+      robot_radius: 0.25
+      plugins: ["inflation_layer"]
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        enabled: true
+        inflation_radius: 0.25
+        cost_scaling_factor: 3.0
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: false
+      global_frame: map
+      robot_base_frame: unitree_go2/base_footprint
+      update_frequency: 1.0
+      publish_frequency: 1.0
+      resolution: 0.05
+      robot_radius: 0.25
+      track_unknown_space: false
+      plugins: ["static_layer", "inflation_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: true
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        enabled: true
+        inflation_radius: 0.35
+        cost_scaling_factor: 3.0
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: false
+    global_frame: map
+    robot_base_frame: unitree_go2/base_footprint
+    odom_topic: /Odometry
+    bt_loop_duration: 10
+    default_server_timeout: 20
+    default_bt_xml_filename: "nav2/real_nav_to_pose_no_recovery.xml"
+    default_nav_to_pose_bt_xml: "nav2/real_nav_to_pose_no_recovery.xml"
+    default_nav_through_poses_bt_xml: "nav2/real_nav_to_pose_no_recovery.xml"
+    plugin_lib_names:
+      - nav2_compute_path_to_pose_action_bt_node
+      - nav2_follow_path_action_bt_node
+      - nav2_rate_controller_bt_node
+      - nav2_pipeline_sequence_bt_node
