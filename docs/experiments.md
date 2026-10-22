@@ -1,3 +1,5 @@
+> 2026-10-22：下文为迁移前实验记录，保留历史边界。最新云仓储仿真、实际AMCL、独立LIO/LIVO和实时障碍验证见[升级说明](CLOUD_NAVIGATION_UPGRADE.md)与[当前模块](../isaac_sim/go2_warehouse/README.md)；旧真机结果不因仿真升级而自动获得验证。
+
 # Experiment evidence and limits
 
 | Experiment | Evidence retained privately in the source workspace | What it supports | What it does not support |
