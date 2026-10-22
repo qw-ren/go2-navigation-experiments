@@ -1,3 +1,5 @@
+> 2026-10-22：下文为迁移前实验记录，保留历史边界。最新云仓储仿真、实际AMCL、独立LIO/LIVO和实时障碍验证见[升级说明](CLOUD_NAVIGATION_UPGRADE.md)与[当前模块](../isaac_sim/go2_warehouse/README.md)；旧真机结果不因仿真升级而自动获得验证。
+
 # Simulation integration notes
 
 The independent repository does not contain the upstream Go2 simulator, model, RL checkpoints, or the upstream-derived bridge file. Use the [isaacsim-4.5 branch of the original project](https://github.com/Zhefan-Xu/isaac-go2-ros2) with Isaac Sim/Isaac Lab and ROS 2 Humble as the simulation base.

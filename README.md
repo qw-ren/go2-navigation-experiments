@@ -7,9 +7,15 @@ ROS 2/Nav2 navigation experiments in Isaac Sim and on a real Unitree Go2 with a 
 
 My work focuses on **system integration, configuration, debugging, mapping utilities, TF and odometry interfaces, and experimental validation**. This repository contains the experiment-layer scripts, Nav2 parameters, offline map tools, and technical records.
 
-The simulation work builds on [Zhefan Xu's Isaac Sim Go2 ROS 2 project](https://github.com/Zhefan-Xu/isaac-go2-ros2). Its Go2 model, locomotion controller, and RL policy are not my work. The upstream implementation is not copied into this independent repository.
+The simulation work builds on [Zhefan Xu's Isaac Sim Go2 ROS 2 project](https://github.com/Zhefan-Xu/isaac-go2-ros2). Its Go2 model, locomotion controller, and RL policy are not my work. The earlier experiment scripts depend on upstream; the new isolated cloud module includes the actual adapted source snapshot with its source notice.
 
-## Simulation pipeline
+## Cloud warehouse upgrade (2026-10-22)
+
+The isolated [cloud Go2 module](isaac_sim/go2_warehouse/README.md) adds Isaac Sim 4.5 warehouse integration, actual AMCL localization, independent FAST-LIO2/FAST-LIVO2 odometry, live obstacle layers and recorded moving-obstacle experiments. Navigation uses estimated odometry; simulator truth is reserved for offline evaluation and the display camera. See [what changed](docs/CLOUD_NAVIGATION_UPGRADE.md), [LIO](docs/GO2_WAREHOUSE_LIO.md), and [LIVO](docs/GO2_WAREHOUSE_LIVO.md).
+
+The sections below describe the earlier laptop/real-robot paths. The real-robot limitations remain; simulation results do not validate real-robot obstacle avoidance or JetBot migration. Cloud implementation and selected evidence are now included separately, with upstream attribution in [SOURCE_NOTICE](isaac_sim/go2_warehouse/SOURCE_NOTICE.md); weights and NVIDIA assets remain external.
+
+## Earlier simulation pipeline
 
 ~~~text
 Isaac Sim / Isaac Lab Go2

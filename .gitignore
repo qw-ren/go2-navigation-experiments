@@ -18,3 +18,8 @@ unitree_sdk2_python/
 unitreesdk/
 ckpts/
 *.pt
+
+# Generated videos are delivered as release assets, not Git blobs
+*.mp4
+*.mov
+*.mkv

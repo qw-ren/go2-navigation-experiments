@@ -12,3 +12,7 @@ This repository does not vendor the projects below. Their source, binaries, mode
 | Unitree SDK2 Python | Go2 SportClient motion interface | https://github.com/unitreerobotics/unitree_sdk2_python |
 
 The exact installed commits of Fast-LIO2, Livox driver, and Unitree SDK2 on the dock were not captured in this public repository. The original simulation fork has the upstream history; this independent repository intentionally does not copy its robot model, RL checkpoint, or bridge implementation.
+
+## Cloud warehouse snapshot
+
+The isolated isaac_sim/go2_warehouse module carries its own SOURCE_NOTICE, upstream README, and FAST-LIO2/FAST-LIVO2 provenance and upstream licenses under cloud/warehouse_lio and cloud/warehouse_livo/integration. It preserves the actual local integration rather than substituting an untouched public checkout. No NVIDIA scene assets, policy weights, binary estimator libraries or installer archives are included. Simulation configuration remains separate from the real-robot launchers.
